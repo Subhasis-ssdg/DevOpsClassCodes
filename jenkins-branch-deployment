@@ -28,11 +28,11 @@ pipeline {
                 sh "mvn package"
             }
         }
-        stage ("Configuring tomcat & deployment") {
-            steps {
-                sh "cd /opt/ && sudo /bin/bash tomcat.sh"
-                sh "sudo mv /var/lib/jenkins/workspace/pipeline-project1/target/addressbook.war /opt/apache-tomcat/webapps/ "
-            }
-        }
+#        stage ("Configuring tomcat & deployment") {
+#            steps {
+#                sh "cd /opt/ && sudo /bin/bash tomcat.sh"
+#                sh "sudo mv /var/lib/jenkins/workspace/pipeline-project1/target/addressbook.war /opt/apache-tomcat/webapps/ "
+#            }
+#        }
     }
 }
