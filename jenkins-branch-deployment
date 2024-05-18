@@ -1,1 +1,38 @@
 
+pipeline {
+    agent any
+    stages {
+        stage ("Git check out") {
+            steps {
+                git url: "https://github.com/Subhasis-ssdg/DevOpsClassCodes/"
+            }
+        }
+        stage ("compile the code") {
+            steps {
+                sh "mvn compile"
+            }
+        }
+        stage ("code test") {
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage ("code qa") {
+            steps {
+                sh "mvn pmd:pmd"
+                recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [pmdParser()]
+            }
+        }
+        stage ("package creation") {
+            steps {
+                sh "mvn package"
+            }
+        }
+        stage ("Configuring tomcat & deployment") {
+            steps {
+                sh "cd /opt/ && sudo /bin/bash tomcat.sh"
+                sh "sudo mv /var/lib/jenkins/workspace/pipeline-project1/target/addressbook.war /opt/apache-tomcat/webapps/ "
+            }
+        }
+    }
+}
